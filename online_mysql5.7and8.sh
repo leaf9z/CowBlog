@@ -304,7 +304,7 @@ remove_nginx() {
 install_mysql57() {
         echo -e "${line4}正在安装MySQL5.7${line4}"
         echo -e "正在下载MySQL5.7..."
-        if [ -e ${mysql57_version}.tar.xz  ];then
+        if [ -e ${mysql57_version}.tar.gz  ];then
                 echo "安装包已存在，跳过下载"
         else
                 echo "开始下载安装包..."
