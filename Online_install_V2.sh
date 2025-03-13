@@ -376,9 +376,11 @@ log-error = /var/log/mysql/error.log
 slow-query-log = 1
 slow-query-log-file = /var/log/mysql/mysql-slow.log
 long_query_time = 2
+expire_logs_days = 7
 
 # 字符集设置及排序规则
 character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
 EOF
         echo -e "${line4}配置MySQL环境变量${line4}"
         if ! grep -q 'export PATH=\$PATH:/usr/local/mysql5.7/bin' /etc/profile; then
@@ -498,22 +500,32 @@ install_mysql8() {
 
         echo -e "${line4}创建MySQL配置文件${line4}"
         cat > /etc/my.cnf<<EOF
-[mysqld]
-datadir=/var/lib/mysql
+[client]
+# 默认连接 MySQL 时使用的字符集
+default-character-set = utf8mb4
 socket=/var/lib/mysql/mysql.sock
-symbolic-links=0
+
+[mysqld]
 user=mysql
+socket=/var/lib/mysql/mysql.sock
 port=3306
+pid-file=/var/lib/mysql/mysql.pid
+basedir=/usr/local/mysql
+datadir=/var/lib/mysql
+
 lower_case_table_names = 1
-[mysqld_safe]
-pid-file=/var/run/mysql/mysql.pid
-#slowlog
-slow_query_log = 1
-slow_query_log_file = /var/log/mysql/mysql-slow.log
+explicit_defaults_for_timestamp = 1
+
+#日志配置
+log-error = /var/log/mysql/error.log
+slow-query-log = 1
+slow-query-log-file = /var/log/mysql/mysql-slow.log
 long_query_time = 2
-log_queries_not_using_indexes = 1
-#errorlog
-log_error = /var/log/mysql/error.log
+binlog_expire_logs_seconds = 604800
+
+# 字符集设置及排序规则
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
 EOF
         echo -e "${line4}配置MySQL环境变量${line4}"
         if ! grep -q 'export PATH=\$PATH:/usr/local/mysql/bin' /etc/profile; then
