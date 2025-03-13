@@ -102,7 +102,7 @@ user=mysql
 socket=/var/lib/mysql/mysql.sock
 port=3306
 pid-file=/var/lib/mysql/mysql.pid
-basedir=/usr/local/mysql
+basedir=/usr/local/mysql5.7
 datadir=/var/lib/mysql
 
 lower_case_table_names = 1
