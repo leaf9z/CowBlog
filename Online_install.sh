@@ -307,7 +307,7 @@ install_mysql8() {
 	
 	echo -e "${line4}正在下载安装依赖${line4}"
 	yum -y install libaio &> /dev/null
-	
+	yum install -y ncurses-compat-libs &> /dev/null
 	echo -e "${line4}正在解压安装${line4}"
 	tar -xvf ${mysql_version}.tar.xz -C /usr/local &> /dev/null 
 	cd /usr/local
